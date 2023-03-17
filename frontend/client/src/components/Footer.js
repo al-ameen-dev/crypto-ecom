@@ -1,0 +1,52 @@
+import React from 'react';
+import Link from '@mui/material/Link';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import { useSelector } from "react-redux";
+
+export default function Footer() {
+  
+  const styles = {  
+  		trans:{
+			bgcolor:'grey.100',
+			height:'25rem',
+			marginTop:'3rem',
+		},
+		link: {
+    		color: '#333',
+    		textAlign:'center',
+    		p:4,
+    		textDecoration: 'none',
+    		'&:hover': {
+      	textDecoration: 'underline',
+    	},
+    	info:{
+			display:'flex',
+			flexDirection:'column',
+			alignContent:'center',    	
+    	}
+    }
+  }
+  return (
+   	<Box sx={styles.trans}>
+   				<Typography  variant="body2" color="textSecondary" sx={{textAlign:'center',}}>
+        				© 2023 Crypto. All Rights Reserved.
+      			</Typography>
+        			<Link href="/about" sx={styles.link} component="h3">
+          			About Us
+        			</Link>
+        			<Link href="/contact" sx={styles.link} component="h3">
+          			Contact Us
+        			</Link>
+        			<Link href="/privacy" sx={styles.link} component="h3">
+          			Privacy Policy
+        			</Link>
+        			<Link href="/terms" sx={styles.link} component="h3">
+          			Terms and Conditions
+        			</Link>
+  		</Box>
+   )
+}
+

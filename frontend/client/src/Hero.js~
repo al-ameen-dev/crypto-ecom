@@ -1,0 +1,14 @@
+import HeroCarousel from "react-hero-carousel";
+import Box from "@mui/material/Box";
+import Hero1 from "Hero1.jpg";
+
+const Hero = () => {
+		return(
+		<Box style={{backgroundImage:Hero1}}>
+			<p>hi</p>
+		</Box>
+		);
+}
+
+
+export default Hero;

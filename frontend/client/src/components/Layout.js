@@ -1,0 +1,23 @@
+import { Helmet } from "react-helmet";
+import Header from 'components/Header';
+import Box from '@mui/material/Box';
+import Footer from 'components/Footer';
+import Toolbar from '@mui/material/Toolbar';
+
+const Layout = ({ title, content, children}) => {
+
+    return(
+        <Box>
+            <Helmet>
+                <title>{ title }</title>
+                <meta name="description" content={ content } />
+            </Helmet>
+            <Header />
+            <Toolbar />
+            {children}
+            <Footer />
+        </Box>
+    )
+}
+
+export default Layout;
