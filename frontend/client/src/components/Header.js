@@ -9,7 +9,6 @@ import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import axios from 'axios';
 //
-import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -17,15 +16,16 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import CloseIcon from '@mui/icons-material/Close';
 //import Login from 'components/Login';
-
+import {  } from 'features/user';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { userLogout, setUser } from 'features/user';
+import { setLogout, setUser, setLogin } from 'features/user';
 import { Link as RouterLink } from 'react-router-dom';
 import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 
 
 const drawerWidth = 240;
+const meUrl = 'http://127.0.0.1:8000/api/users/me'
 
 export default function Header(props){
 	
@@ -35,7 +35,25 @@ export default function Header(props){
 	const [mobileOpen, setMobileOpen] = useState(false);
 	const { isAuthenticated, user} = useSelector(state => state.user);
 	const [open, setOpen] = useState(false);
-		
+  
+  useEffect(()=>{
+    if(localStorage.getItem("token") !== null)
+    {
+      dispatch(setLogin())
+      axios.get(meUrl,{
+        headers:{
+          'Authorization': 'Bearer '+localStorage.getItem('token'),
+        }
+      }).then((response)=>{
+        dispatch(setUser(response.data))
+        dispatch(setLogin())
+      }).catch((error)=>{
+        console.log(error)
+      })
+
+    }
+  },[])
+  
 	
   const handleClickOpen = () => {
     setOpen(true);
@@ -45,7 +63,8 @@ export default function Header(props){
   };
 	
 	const handleLogout = () =>{
-		dispatch(userLogout())	
+    localStorage.removeItem("token")
+		dispatch(setLogout())	
 	}
 	const handleDrawerToggle = () => {
 		setMobileOpen((prevState) => !prevState);
@@ -99,7 +118,6 @@ export default function Header(props){
       <Button key="Logout"  onClick={handleLogout} sx={styles.txtBlack} component={RouterLink} to="/" >
         Logout
       </Button>
-      <Typography variant='p' color='primary'>Welcome {isAuthenticated ? user.first_name:'guest'}</Typography>
     </>
     
   )
@@ -112,7 +130,6 @@ export default function Header(props){
       <Button key="Register" sx={styles.txtBlack} component={RouterLink} to="/Register">
         Register
       </Button>
-      <Typography variant='p' color='primary'>Welcome Guest</Typography>
     </>
   )
 
@@ -128,9 +145,6 @@ export default function Header(props){
           <ListItemText primary="Logout" sx={styles.txtBlack} />
         </ListItemButton>
       </ListItem>
-      <ListItem key='guesttxt' sx={{textAlign:'center'}}disablePadding>
-      	<ListItemText color='primary' primary='Welcome ' />
-      </ListItem>
     </>
   )
 
@@ -145,9 +159,6 @@ export default function Header(props){
         <ListItemButton sx={{ textAlign: 'center' }}>
           <ListItemText primary="Register" sx={styles.txtBlack} />
         </ListItemButton>
-      </ListItem>
-      <ListItem key='guesttxt' sx={{textAlign:'center'}}disablePadding>
-      	<ListItemText color='primary' primary="Welcome Guest" />
       </ListItem>
     </>
   )
@@ -189,6 +200,7 @@ export default function Header(props){
             	<MenuIcon />
           	</IconButton>
           	<Typography variant='h4' sx={styles.appbarTitle}>Crypto</Typography>
+            <Typography variant='p' color='primary'>Welcome {isAuthenticated ? user.first_name:'guest'}</Typography>
           	<Box sx={styles.nav}>
               <Button key="Home" sx={styles.txtBlack} component={RouterLink} to="/">
                 Home

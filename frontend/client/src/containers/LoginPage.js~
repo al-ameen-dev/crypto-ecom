@@ -58,7 +58,7 @@ export default function LoginPage() {
 				}			
 			}).then((response)=>{
 				console.log(response.data)
-				//dispatch(setUser(response.data));
+				dispatch(setUser(response.data));
 			}).catch((error)=>{
 				console.log(error)
 			})
