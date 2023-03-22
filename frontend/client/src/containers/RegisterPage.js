@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 /*function Copyright(props) {
 return (
@@ -35,34 +36,28 @@ return (
 const theme = createTheme();
 
 const RegisterUrl = 'http://127.0.0.1:8000/api/users/register'
-const meUrl = 'http://127.0.0.1:8000/api/users/me'
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc5MDMyMDg1LCJpYXQiOjE2NzkwMzAyODUsImp0aSI6IjQwNWQ0NmQyMTBhNTQ2YzE4Zjc1MWNhNDU3MTg3MjhmIiwidXNlcl9pZCI6M30.6UDeJ0Ashn6iANZp-yETED0rwiZvei0iVsoXJEYQgYY'
+
 
 export default function RegisterPage() {
 	
-	useEffect(()=>{
-		axios.get(meUrl,{
-				headers:{
-					'Authorization': 'Bearer ' + token,				
-				}			
-			}).then((response)=>{
-				console.log(response.data)
-				//dispatch(setUser(response.data));
-			}).catch((error)=>{
-				console.log(error)
-			})
-	},[])
+	const navigate = useNavigate()
 	const handleSubmit = (event) => {
 	event.preventDefault();
 	const data = new FormData(event.currentTarget);
+	console.log(data)
 	const info = {
-		first_name: data.get('firstname'),
-    	last_name: data.get('lastname'),
+		first_name: data.get('firstName'),
+    	last_name: data.get('lastName'),
     	email:data.get('email'),
-    	password:data.get('password'),
-    };
-   axios.post(RegisterUrl, info).then((response) => {
+    	password:data.get('password')
+    }
+   axios.post(RegisterUrl,info, {
+		headers:{
+			'Content-Type':'application/json'		
+		}
+		}).then((response) => {
   		console.log(response.data);
+  		navigate('/login')
   	}).catch((error) => {
 	  console.error(error);
 	});

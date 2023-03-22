@@ -16,22 +16,21 @@ export const userSlice = createSlice({
     resetRegistered: state =>{
       state.registered = false;
     },
-    setToken:(state,action) =>{
-		state.accessToken = action.payload.access;
-		state.refreshToken = action.payload.refresh;
+    setLogin:(state) =>{
 		state.isAuthenticated = true;
 		state.registered = true;
     },
     setUser:(state,action) =>{
     	state.user = action.payload;
     },
-    userLogout:(state) =>{
-		state.isAuthenticated = false;    
-    },
+    setLogout:(state)=>{
+      state.isAuthenticated = false;
+      state.registered = false;
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { resetRegistered, setToken, setUser } = userSlice.actions
+export const { resetRegistered, setLogin, setUser, setLogout } = userSlice.actions
 
 export default userSlice.reducer

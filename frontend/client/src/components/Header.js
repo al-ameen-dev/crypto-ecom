@@ -112,8 +112,8 @@ export default function Header(props){
 	
 	const authLinks = (
     <>
-      <Button key="Dashboard" sx={styles.txtBlack} component={RouterLink} to="/Dashboard" >
-        Dashboard
+      <Button key="Profile" sx={styles.txtBlack} component={RouterLink} to="/Dashboard" >
+        MyProfile
       </Button>
       <Button key="Logout"  onClick={handleLogout} sx={styles.txtBlack} component={RouterLink} to="/" >
         Logout
@@ -125,19 +125,19 @@ export default function Header(props){
   const guestLinks = (
     <>
       <Button key="Login" sx={styles.txtBlack} component={RouterLink} to="/Login">
-        Login
+        Signin
       </Button>
       <Button key="Register" sx={styles.txtBlack} component={RouterLink} to="/Register">
-        Register
+        Signup
       </Button>
     </>
   )
 
   const authLinksList = (
     <>
-      <ListItem key="Dashboard" component={RouterLink} to="/DashBoard" disablePadding>
+      <ListItem key="Profile" component={RouterLink} to="/DashBoard" disablePadding>
         <ListItemButton sx={{ textAlign: 'center' }}>
-          <ListItemText primary="DashBoard" sx={styles.txtBlack} />
+          <ListItemText primary="MyProfile" sx={styles.txtBlack} />
         </ListItemButton>
       </ListItem>
       <ListItem key="Logout" component={RouterLink} to="/" disablePadding>
@@ -152,12 +152,12 @@ export default function Header(props){
     <>
       <ListItem key="Login" component={RouterLink} to="/Login" disablePadding>
         <ListItemButton sx={{ textAlign: 'center' }}>
-          <ListItemText primary="Login" sx={styles.txtBlack} />
+          <ListItemText primary="Signin" sx={styles.txtBlack} />
         </ListItemButton>
       </ListItem>
       <ListItem key="Register" component={RouterLink} to="/Register" disablePadding>
         <ListItemButton sx={{ textAlign: 'center' }}>
-          <ListItemText primary="Register" sx={styles.txtBlack} />
+          <ListItemText primary="Signup" sx={styles.txtBlack} />
         </ListItemButton>
       </ListItem>
     </>
@@ -200,7 +200,7 @@ export default function Header(props){
             	<MenuIcon />
           	</IconButton>
           	<Typography variant='h4' sx={styles.appbarTitle}>Crypto</Typography>
-            <Typography variant='p' color='primary'>Welcome {isAuthenticated ? user.first_name:'guest'}</Typography>
+            {/*<Typography variant='p' color='primary'>Welcome {isAuthenticated ? user.first_name:'guest'}</Typography>*/}
           	<Box sx={styles.nav}>
               <Button key="Home" sx={styles.txtBlack} component={RouterLink} to="/">
                 Home

@@ -16,7 +16,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { grey } from "@mui/material/colors";
 import { useSelector, useDispatch } from 'react-redux';
-import { setToken, setUser } from 'features/user';
 import { useState } from 'react';
 
 
@@ -34,7 +33,6 @@ import { useState } from 'react';
 }*/
 //<Copyright sx={{ mt: 8, mb: 4 }} />
 const LoginUrl = 'http://127.0.0.1:8000/api/token/'
-const meUrl = 'http://127.0.0.1:8000/api/users/me'
 
 export default function LoginPage() {
 	
@@ -50,19 +48,8 @@ export default function LoginPage() {
       password: data.get('password'),
     };
     axios.post(LoginUrl,info).then((response) => {
-    	dispatch(setToken(response.data));
-    	setTok(response.data.access);
-    	axios.get(meUrl,{
-				headers:{
-					'Authorization': 'Bearer ' + response.data.access,				
-				}			
-			}).then((response)=>{
-				console.log(response.data)
-				dispatch(setUser(response.data));
-			}).catch((error)=>{
-				console.log(error)
-			})
-	  //navigate("/")
+    	localStorage.setItem('token',response.data.access)
+	  	navigate("/")
 	}).catch((error) => {
 		console.error(error);
 	});

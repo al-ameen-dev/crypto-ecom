@@ -50,8 +50,6 @@ export default function App(){
 		<Provider store={store}>
 				<CssBaseline />
 				<Toolbar />
-				
-				<Box id='sliding' />
 				<Routes>
           		<Route path="/" element={<HomePage />} />
           		<Route path="/Login" element={<LoginPage />} />
