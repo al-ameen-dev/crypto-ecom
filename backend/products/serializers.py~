@@ -10,7 +10,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class CartSerializer(serializers.ModelSerializer):
-	#user = UserSerializer()
+	user = UserSerializer()
 	
 	class Meta:
 		model = CartItem

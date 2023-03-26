@@ -33,6 +33,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         return user
 
 class UserSerializer(serializers.ModelSerializer):
+	cartitem = serializers.PrimaryKeyRelatedField(many=True, queryset=Snippet.objects.all())	
 	
    class Meta:
       model = User

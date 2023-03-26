@@ -3,6 +3,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -19,8 +20,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import {  } from 'features/user';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setLogout, setUser, setLogin } from 'features/user';
-import { Link as RouterLink } from 'react-router-dom';
+import { setLogout, setUser, setLogin, setToken } from 'features/user';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 
 
@@ -31,25 +32,36 @@ export default function Header(props){
 	
 	
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const { window } = props;
 	const [mobileOpen, setMobileOpen] = useState(false);
 	const { isAuthenticated, user} = useSelector(state => state.user);
 	const [open, setOpen] = useState(false);
   
   useEffect(()=>{
-    if(localStorage.getItem("token") !== null)
+    if(localStorage.getItem("mydata") !== null)
     {
-      dispatch(setLogin())
-      axios.get(meUrl,{
-        headers:{
-          'Authorization': 'Bearer '+localStorage.getItem('token'),
-        }
-      }).then((response)=>{
-        dispatch(setUser(response.data))
-        dispatch(setLogin())
-      }).catch((error)=>{
-        console.log(error)
-      })
+    	const storedata = JSON.parse(localStorage.getItem("mydata"));
+    	if(storedata && storedata.expirytime > new Date().getTime())
+    	{
+    		dispatch(setLogin())
+    		dispatch(setToken(storedata.tokendata.token))
+      	axios.get(meUrl,{
+        		headers:{
+          		'Authorization': 'Bearer '+storedata.tokendata.token,
+        		}
+      	}).then((response)=>{
+       		 dispatch(setUser(response.data))
+        		dispatch(setLogin())
+      	}).catch((error)=>{
+       	 	console.log(error)
+      	})
+    	}
+    	else
+    	{
+			navigate('/login')
+    	}
+      
 
     }
   },[])
@@ -63,7 +75,7 @@ export default function Header(props){
   };
 	
 	const handleLogout = () =>{
-    localStorage.removeItem("token")
+    localStorage.removeItem("mydata")
 		dispatch(setLogout())	
 	}
 	const handleDrawerToggle = () => {
@@ -201,6 +213,9 @@ export default function Header(props){
           	</IconButton>
           	<Typography variant='h4' sx={styles.appbarTitle}>Crypto</Typography>
             {/*<Typography variant='p' color='primary'>Welcome {isAuthenticated ? user.first_name:'guest'}</Typography>*/}
+            <IconButton color="primary" aria-label="add to shopping cart">
+        			<ShoppingCartOutlinedIcon />
+      		</IconButton>
           	<Box sx={styles.nav}>
               <Button key="Home" sx={styles.txtBlack} component={RouterLink} to="/">
                 Home

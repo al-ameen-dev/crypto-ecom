@@ -130,7 +130,7 @@ const HomePage = () =>{
 						
 						<Grid container xs={12} md={9} direction='row'>
  							{products.map(item=>(
-							<CardItem key={item.id} name={item.name} price={item.price} imgurl={item.imgurl} product_description={item.product_description}/>
+							<CardItem key={item.id} name={item.name} price={item.price} imgurl={item.imgurl} product_description={item.product_description} item={item}/>
 							))}
 						</Grid>        			
         			</Grid>

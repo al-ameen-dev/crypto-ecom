@@ -1,8 +1,11 @@
 from rest_framework.views import APIView
-from .models import Product
-from .serializers import ProductSerializer
+from .models import Product, CartItem
+from .serializers import ProductSerializer, CartSerializer
 from rest_framework.response import Response
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import status, generics
+from django.contrib.auth import get_user_model
+Users = get_user_model()
 
 #this class based view return all the products from the databases
 class ProductList(APIView):
@@ -37,3 +40,22 @@ class ProductSearch(APIView):
 		serializer = ProductSerializer(products, many=True)
 		
 		return Response(serializer.data)
+
+class AddToCart(APIView):
+	permission_classes = [IsAuthenticated]	
+	
+	def post(self, request, format=None):
+		request.data['user'] = request.user.pk
+		
+		pname = request.data["name"]
+		try:
+			item = CartItem.objects.get(name=pname)
+			return Response({"message":"Already added to the cart"},status=status.HTTP_200_OK)
+		except CartItem.DoesNotExist:
+			serializer = CartSerializer(data=request.data)
+			if serializer.is_valid():
+				serializer.save(user=request.user)
+				return Response(serializer.data,status=status.HTTP_201_CREATED)
+			return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+		
+

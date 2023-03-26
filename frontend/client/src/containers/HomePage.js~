@@ -124,7 +124,7 @@ const HomePage = () =>{
     						<Divider sx={{mt:4}}/>
      	 					<Typography variant='h6' sx={{mt:1}}>Price₹  Below</Typography>
      	 					<Slider aria-label="Price" onChange={handleSliderChange} defaultValue={300} getAriaValueText={valuetext} valueLabelDisplay='auto' 
-							 valueLabel={(value) => `${value} ₹`} step={200} marks min={400} max={20000} />
+							 step={200} marks min={400} max={20000} />
      	 					
 						</Grid>
 						

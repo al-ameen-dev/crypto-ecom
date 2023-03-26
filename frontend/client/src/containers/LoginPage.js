@@ -38,7 +38,12 @@ export default function LoginPage() {
 	
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const [tok,setTok] = useState('');
+	const { isAuthenticated } = useSelector(state=>state.user)
+	if(isAuthenticated === true)
+    {
+		navigate("/")
+		return;
+    }
   	const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -48,7 +53,9 @@ export default function LoginPage() {
       password: data.get('password'),
     };
     axios.post(LoginUrl,info).then((response) => {
-    	localStorage.setItem('token',response.data.access)
+    	const expirytime = new Date().getTime()+(10*60*1000)
+    	const tokendata ={token:response.data.access}
+    	localStorage.setItem('mydata',JSON.stringify({tokendata,expirytime}))
 	  	navigate("/")
 	}).catch((error) => {
 		console.error(error);

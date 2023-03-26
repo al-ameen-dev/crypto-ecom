@@ -17,6 +17,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 /*function Copyright(props) {
 return (
@@ -41,6 +42,12 @@ const RegisterUrl = 'http://127.0.0.1:8000/api/users/register'
 export default function RegisterPage() {
 	
 	const navigate = useNavigate()
+	const { isAuthenticated } = useSelector(state =>state.user)
+	if(isAuthenticated === true)
+    {
+		navigate("/")
+		return;
+    }
 	const handleSubmit = (event) => {
 	event.preventDefault();
 	const data = new FormData(event.currentTarget);
