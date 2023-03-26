@@ -14,7 +14,7 @@ import { styled, alpha } from '@mui/material/styles';
 import { Link as Scroll } from 'react-scroll';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Provider } from 'react-redux';
-import { store } from 'store';
+import { store } from 'features/store';
 import { useState, useEffect } from 'react'
 
 export default function App(){

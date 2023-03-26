@@ -52,8 +52,8 @@ export default function App(){
 				<Toolbar />
 				<Routes>
           		<Route path="/" element={<HomePage />} />
-          		<Route path="/Login" element={<LoginPage />} />
-          		<Route path="/Register" element={<RegisterPage />} />
+          		<Route path="/signin" element={<LoginPage />} />
+          		<Route path="/signup" element={<RegisterPage />} />
           		<Route path="*" element={<Navigate to="/" replace />} />
         		</Routes>
 		</Provider>	

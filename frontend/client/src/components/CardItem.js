@@ -13,7 +13,7 @@ import { useState } from 'react';
 
 export default function CardItem({name, price, imgurl, product_description ,item}) {
 	
-	const addCartUrl = 'http://127.0.0.1:8000/api/products/addtocart'
+	const addCartUrl = 'http://127.0.0.1:8000/api/products/cart'
   
   const [itemdata,setItemdata] = useState(item)
   const navigate = useNavigate()

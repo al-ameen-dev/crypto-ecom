@@ -3,12 +3,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import axios from 'axios';
+import Cart from 'components/Cart';
 //
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -117,14 +117,14 @@ export default function Header(props){
 		nav:{
 			display: { 
 				xs: 'none',
-				sm: 'block' 
+				sm: 'block'
 			}		
 		},
 	}
 	
 	const authLinks = (
     <>
-      <Button key="Profile" sx={styles.txtBlack} component={RouterLink} to="/Dashboard" >
+      <Button key="Profile" sx={styles.txtBlack} component={RouterLink} to="/profile" >
         MyProfile
       </Button>
       <Button key="Logout"  onClick={handleLogout} sx={styles.txtBlack} component={RouterLink} to="/" >
@@ -136,10 +136,10 @@ export default function Header(props){
 
   const guestLinks = (
     <>
-      <Button key="Login" sx={styles.txtBlack} component={RouterLink} to="/Login">
+      <Button key="Login" sx={styles.txtBlack} component={RouterLink} to="/signin">
         Signin
       </Button>
-      <Button key="Register" sx={styles.txtBlack} component={RouterLink} to="/Register">
+      <Button key="Register" sx={styles.txtBlack} component={RouterLink} to="/signup">
         Signup
       </Button>
     </>
@@ -147,7 +147,7 @@ export default function Header(props){
 
   const authLinksList = (
     <>
-      <ListItem key="Profile" component={RouterLink} to="/DashBoard" disablePadding>
+      <ListItem key="Profile" component={RouterLink} to="/profile" disablePadding>
         <ListItemButton sx={{ textAlign: 'center' }}>
           <ListItemText primary="MyProfile" sx={styles.txtBlack} />
         </ListItemButton>
@@ -162,12 +162,12 @@ export default function Header(props){
 
   const guestLinksList = (
     <>
-      <ListItem key="Login" component={RouterLink} to="/Login" disablePadding>
+      <ListItem key="Login" component={RouterLink} to="/signin" disablePadding>
         <ListItemButton sx={{ textAlign: 'center' }}>
           <ListItemText primary="Signin" sx={styles.txtBlack} />
         </ListItemButton>
       </ListItem>
-      <ListItem key="Register" component={RouterLink} to="/Register" disablePadding>
+      <ListItem key="Register" component={RouterLink} to="/signup" disablePadding>
         <ListItemButton sx={{ textAlign: 'center' }}>
           <ListItemText primary="Signup" sx={styles.txtBlack} />
         </ListItemButton>
@@ -213,9 +213,7 @@ export default function Header(props){
           	</IconButton>
           	<Typography variant='h4' sx={styles.appbarTitle}>Crypto</Typography>
             {/*<Typography variant='p' color='primary'>Welcome {isAuthenticated ? user.first_name:'guest'}</Typography>*/}
-            <IconButton color="primary" aria-label="add to shopping cart">
-        			<ShoppingCartOutlinedIcon />
-      		</IconButton>
+            { isAuthenticated ? <Cart /> : ""}
           	<Box sx={styles.nav}>
               <Button key="Home" sx={styles.txtBlack} component={RouterLink} to="/">
                 Home

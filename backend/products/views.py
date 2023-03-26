@@ -41,8 +41,15 @@ class ProductSearch(APIView):
 		
 		return Response(serializer.data)
 
-class AddToCart(APIView):
+#This view is used to add, get and delete the cart item for the authenticated user based on the request
+class UserCart(APIView):
 	permission_classes = [IsAuthenticated]	
+	
+	def get(self,request, format = None):
+		cartdata = CartItem.objects.filter(user=request.user.pk)
+		serializer = CartSerializer(cartdata, many=True)
+		
+		return Response(serializer.data)
 	
 	def post(self, request, format=None):
 		request.data['user'] = request.user.pk
@@ -55,7 +62,10 @@ class AddToCart(APIView):
 			serializer = CartSerializer(data=request.data)
 			if serializer.is_valid():
 				serializer.save(user=request.user)
-				return Response(serializer.data,status=status.HTTP_201_CREATED)
+				return Response({"message":"successfully added to the cart"},status=status.HTTP_201_CREATED)
 			return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-		
 
+	def delete(self, request, pk, format=None):
+		item = CartItem.objects.get(pk=pk)
+		item.delete()
+		return Response(status=status.HTTP_204_NO_CONTENT)	 

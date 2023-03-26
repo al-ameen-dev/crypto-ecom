@@ -32,7 +32,6 @@ export default function CardItem({name, price, imgurl, product_description ,item
 				headers:{
 					'Authorization':'Bearer '+token,			
 				}}).then((response)=>{
-					console.log(response.data)
 				alert(response.data.message)
 			}).catch((error)=>{
 				console.log(error)
