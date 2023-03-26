@@ -6,17 +6,18 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 
 import { useState } from 'react';
 
 export default function CardItem({name, price, imgurl, product_description ,item}) {
 	
-	const addCartUrl = 'http://127.0.0.1:8000/api/products/cart'
+	const cartUrl = 'http://127.0.0.1:8000/api/products/cart'
   
   const [itemdata,setItemdata] = useState(item)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const { token, isAuthenticated } = useSelector(state =>state.user)  
   
   const handleAddCart = (event) =>{
@@ -28,7 +29,7 @@ export default function CardItem({name, price, imgurl, product_description ,item
 				imgurl:itemdata.imgurl,
 				product_description:itemdata.product_description
 			}
-			axios.post(addCartUrl,addData,{
+			axios.post(cartUrl,addData,{
 				headers:{
 					'Authorization':'Bearer '+token,			
 				}}).then((response)=>{
@@ -38,8 +39,8 @@ export default function CardItem({name, price, imgurl, product_description ,item
 			})
   		}
 		else{
-			alert("you need to login first to add to the cart")
-			navigate("/login")		
+			alert("you need to signin first to add to the cart")
+			navigate("/signin")		
 		}
 	}  
   
@@ -62,7 +63,7 @@ export default function CardItem({name, price, imgurl, product_description ,item
         </Typography>
       </CardContent>
       <CardActions>
-        <Button onClick={handleAddCart} size="small" variant='outlined'>Add To Cart<AddShoppingCartOutlinedIcon /></Button>
+        <Button onClick={handleAddCart} size="small" variant='contained'>Add To Cart<AddShoppingCartOutlinedIcon /></Button>
       </CardActions>
     </Card>
   );

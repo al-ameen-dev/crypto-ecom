@@ -39,22 +39,20 @@ export default function LoginPage() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { isAuthenticated } = useSelector(state=>state.user)
+	if(isAuthenticated === true)
+    {
+		navigate("/")
+    }
   	const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    
-    if(isAuthenticated === true)
-    {
-		navigate("/")
-		return;
-    }
     
     const info = {
       email: data.get('email'),
       password: data.get('password'),
     };
     axios.post(LoginUrl,info).then((response) => {
-    	const expirytime = new Date().getTime()+(10*60*1000)
+    	const expirytime = new Date().getTime()+(20*60*1000)
     	const tokendata ={token:response.data.access}
     	localStorage.setItem('mydata',JSON.stringify({tokendata,expirytime}))
 	  	navigate("/")
@@ -118,7 +116,7 @@ export default function LoginPage() {
                 </Link>
               </Grid>*/}
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

@@ -42,6 +42,7 @@ const RegisterUrl = 'http://127.0.0.1:8000/api/users/register'
 export default function RegisterPage() {
 	
 	const navigate = useNavigate()
+	const { isAuthenticated } = useSelector(state =>state.user)
 	if(isAuthenticated === true)
     {
 		navigate("/")

@@ -1,15 +1,21 @@
-import * as React from 'react';
+import  { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
+import Divider from '@mui/material/Divider';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
+import Container from '@mui/material/Container';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -49,51 +55,98 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function CustomizedDialogs() {
-  const [open, setOpen] = React.useState(false);
-
+export default function Cart() {
+  const [open, setOpen] = useState(false);
+  const [items,setItems] = useState([]);
+  const [total,setTotal] = useState(0)
+  const { token } = useSelector(state=>state.user);
+  const cartUrl = 'http://127.0.0.1:8000/api/products/cart';
+  const cartDeleteUrl = 'http://127.0.0.1:8000/api/products/cart/delete/'
+  useEffect(()=>{
+  		items.map(item=>setTotal((prevState)=>prevState+parseInt(item.price)))
+  },[items])
   const handleClickOpen = () => {
     setOpen(true);
+    axios.get(cartUrl,{headers:{
+    	"Authorization":"Bearer "+token
+    }}).then((response)=>{
+		setItems(response.data)
+		console.log(response.data)
+    }).catch((error)=>{
+    	console.log(error)
+    })
   };
   const handleClose = () => {
     setOpen(false);
+    setTotal(0)
+  };
+  
+  const handleDelete = (event) =>{
+		  axios.delete(cartDeleteUrl+event.target.value,{headers:{
+    		"Authorization":"Bearer "+token
+    		}}).then((response)=>{
+			console.log("deleted succes")
+			axios.get(cartUrl,{headers:{
+    	"Authorization":"Bearer "+token
+    }}).then((response)=>{
+    	setTotal(0)
+		setItems(response.data)
+		console.log(response.data)
+    }).catch((error)=>{
+    	console.log(error)
+    })
+    	}).catch((error)=>{
+    		console.log(error)
+    })
   };
 
   return (
-    <div>
+    <>
         <IconButton onClick={handleClickOpen} color="primary" aria-label="add to shopping cart">
         		<ShoppingCartOutlinedIcon /> cart
         </IconButton>
       <BootstrapDialog
         onClose={handleClose}
+        fullWidth='xl'
+        maxWidth={true}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Modal title
+          Cart
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
-          </Typography>
-          <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-          </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-            magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-            ullamcorper nulla non metus auctor fringilla.
-          </Typography>
+        		{items.map(item=>(
+        		<Container sx={{display:'flex' , flexDirection:'row',p:1}}>
+        		<img height='65px' width='65px' src={item.imgurl} />
+        		<Divider orientation="vertical" sx={{m:3}}flexItem />
+        		<Typography gutterBottom>
+           		{item.name}
+          	</Typography>
+          	<Divider orientation="vertical" sx={{m:3}}flexItem />
+          	<Typography gutterBottom>
+           		{item.price}₹
+          	</Typography>
+          	<Divider orientation="vertical" sx={{m:3}}flexItem />
+          	<IconButton onClick={handleDelete} value={item.id}color="primary" aria-label="add to shopping cart">
+        			<ShoppingCartOutlinedIcon fontSize='small'/> Remove Item
+        		</IconButton>
+          	</Container>))}
         </DialogContent>
         <DialogActions>
+        	<Container sx={{display:'flex',direction:'row'}}>
+        		<Typography>
+           		Total Amount : 
+          	</Typography>
+        		<Typography>
+           		{total}
+          	</Typography>
+          </Container>
           <Button variant='contained' autoFocus onClick={handleClose}>
-            Checkout
+            <ShoppingCartCheckoutIcon />Checkout
           </Button>
         </DialogActions>
       </BootstrapDialog>
-    </div>
+    </>
   );
 }

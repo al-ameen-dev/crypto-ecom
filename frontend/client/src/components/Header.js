@@ -39,6 +39,22 @@ export default function Header(props){
 	const [open, setOpen] = useState(false);
   
   useEffect(()=>{
+  	
+  	 const interval = setInterval(()=>{
+			if(localStorage.getItem("mydata") !== null)
+			{
+				const storedata = JSON.parse(localStorage.getItem("mydata"));
+    			if(storedata && storedata.expirytime > new Date().getTime())
+    			{
+					console.log('checking')
+    			}
+    			else{
+    				alert("Session Timeout logging out relogin to continue")
+					localStorage.removeItem("mydata")
+					dispatch(setLogout())
+    			}
+			}
+  	 	},5000)
     if(localStorage.getItem("mydata") !== null)
     {
     	const storedata = JSON.parse(localStorage.getItem("mydata"));
@@ -59,11 +75,14 @@ export default function Header(props){
     	}
     	else
     	{
-			navigate('/login')
+    		localStorage.removeItem("mydata")
+			dispatch(setLogout())
+			navigate('/sigin')
     	}
       
 
     }
+    return ()=> clearInterval(interval);
   },[])
   
 	

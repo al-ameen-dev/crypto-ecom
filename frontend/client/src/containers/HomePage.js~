@@ -26,14 +26,15 @@ const HomePage = () =>{
 	
 	const [search,setSearch] = useState('');
 	const [products,setProducts] = useState([])
-	const [rvalue,setRvalue] = useState(null)
+	const [minRange,setMinRange] = useState(200)
+	const [maxRange,setMaxRange] = useState(4000)
+	const [step,setStep] = useState(100)
 	const [category,setCategory] = useState('watch')
 	const [price,setPrice] = useState('')	
 	
 	const productsurl = 'http://127.0.0.1:8000/api/products/all'
 	const categoryurl = 'http://127.0.0.1:8000/api/products/'
 	useEffect(() =>{
-				setRvalue(null)
 				axios.get(categoryurl+category).then((response)=>{
 				setProducts(response.data)
 				console.log(products)
@@ -51,14 +52,17 @@ const HomePage = () =>{
 			})
 	}
 	
-	const handleSliderChange = (event) =>{
-		setPrice(event.target.value)
+	const handlePriceBelow = (event) =>{
+		
 		axios.get(categoryurl+category+'/'+price).then((response)=>{
 				setProducts(response.data)
-				console.log(products)
+				console.log(response.data)
 			}).catch((error)=>{
 				console.log(error)
 			})
+	}
+	const handlePriceInput = (event) =>{
+		setPrice(event.target.value)
 	}
 	const handleSearch = (event)=>{
 		setSearch(event.target.value)
@@ -106,7 +110,7 @@ const HomePage = () =>{
         			<Grid container spacing={2} direction='row'>
 						<Grid item xs={12} md={3} >
 							<Paper elevation={10}>	
-								<InputBase onChange={handleSearch} sx={{ ml: 1, flex: 1 }} placeholder="Search Products" inputProps={{ 'aria-label': 'search google maps' }}/>
+								<InputBase onChange={handleSearch} sx={{ ml: 1, flex: 1 }} placeholder="Search Products" inputProps={{ 'aria-label': 'search products' }}/>
       						<IconButton type="button" sx={{ p: '10px' }} aria-label="search">
         							<SearchIcon />
      	 						</IconButton>
@@ -123,14 +127,20 @@ const HomePage = () =>{
     						</FormControl>
     						<Divider sx={{mt:4}}/>
      	 					<Typography variant='h6' sx={{mt:1}}>Price₹  Below</Typography>
-     	 					<Slider aria-label="Price" onChange={handleSliderChange} defaultValue={300} getAriaValueText={valuetext} valueLabelDisplay='auto' 
-							 step={200} marks min={400} max={20000} />
+     	 					{/*<Slider aria-label="Price" onChange={handleSliderChange} defaultValue={300} getAriaValueText={valuetext} valueLabelDisplay='auto' 
+							 step={step}marks min={minRange} max={maxRange} />*/}
+							<Paper elevation={10}>							 
+							 	<InputBase sx={{ ml: 1 }} onChange={handlePriceInput} placeholder="price" value={price} id='pricebelow' inputProps={{ 'aria-label': 'price' }}/>
+								<IconButton onClick={handlePriceBelow} type="button" sx={{ p: '10px' }} aria-label="search">
+        							<SearchIcon />
+     	 						</IconButton>						
+							</Paper>     	 					
      	 					
 						</Grid>
 						
 						<Grid container xs={12} md={9} direction='row'>
  							{products.map(item=>(
-							<CardItem key={item.id} name={item.name} price={item.price} imgurl={item.imgurl} product_description={item.product_description}/>
+							<CardItem key={item.id} name={item.name} price={item.price} imgurl={item.imgurl} product_description={item.product_description} item={item}/>
 							))}
 						</Grid>        			
         			</Grid>

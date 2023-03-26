@@ -53,7 +53,6 @@ class UserCart(APIView):
 	
 	def post(self, request, format=None):
 		request.data['user'] = request.user.pk
-		
 		pname = request.data["name"]
 		try:
 			item = CartItem.objects.get(name=pname)

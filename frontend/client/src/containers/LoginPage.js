@@ -42,7 +42,6 @@ export default function LoginPage() {
 	if(isAuthenticated === true)
     {
 		navigate("/")
-		return;
     }
   	const handleSubmit = (event) => {
     event.preventDefault();
@@ -117,7 +116,7 @@ export default function LoginPage() {
                 </Link>
               </Grid>*/}
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
