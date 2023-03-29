@@ -4,7 +4,6 @@ const initialState = {
   isAuthenticated:false,
   user:null,
   token:"",
-  total:0,
   loading:false,
   registered:false,
 }
@@ -30,14 +29,11 @@ export const userSlice = createSlice({
     },
     setToken:(state,action)=>{
 		state.token = action.payload;
-    },
-    addToTotal:(state,action)=>{
-		state.total += action.payload;    
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { resetRegistered, setLogin, setUser, setLogout, setToken, addToTotal } = userSlice.actions
+export const { resetRegistered, setLogin, setUser, setLogout, setToken } = userSlice.actions
 
 export default userSlice.reducer

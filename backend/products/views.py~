@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
-from .models import Product, CartItem
-from .serializers import ProductSerializer, CartSerializer
+from .models import Product, CartItem, UserInfo
+from .serializers import ProductSerializer, CartSerializer, UserInfoSerializer
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, generics
@@ -53,7 +53,6 @@ class UserCart(APIView):
 	
 	def post(self, request, format=None):
 		request.data['user'] = request.user.pk
-		#cartinfo = CartInfo.objects.get(user=request.user.pk)
 		pname = request.data["name"]
 		try:
 			item = CartItem.objects.get(name=pname)
@@ -62,10 +61,38 @@ class UserCart(APIView):
 			serializer = CartSerializer(data=request.data)
 			if serializer.is_valid():
 				serializer.save(user=request.user)
-				return Response({"message":"successfully added to the cart"},status=status.HTTP_201_CREATED)
+				return Response({"message":"Successfully added to the cart"},status=status.HTTP_201_CREATED)
 			return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 	def delete(self, request, pk, format=None):
 		item = CartItem.objects.get(pk=pk)
 		item.delete()
-		return Response(status=status.HTTP_204_NO_CONTENT)	 
+		return Response(status=status.HTTP_204_NO_CONTENT)
+
+class Userprofile(APIView):
+	permission_classes = [IsAuthenticated]
+	
+	def get(self, request, format=None):
+		try:
+			info = UserInfo.objects.get(user=request.user.pk)
+			serializer = UserInfoSerializer(info)
+			return Response(serializer.data)
+		except UserInfo.DoesNotExist:
+			return Response({"message":"Please provide the information below","flag":0},status=status.HTTP_201_CREATED)
+	def post(self, request, format=None):
+		request.data['user'] = request.user.pk
+		serializer = UserInfoSerializer(data=request.data)
+
+		if serializer.is_valid():
+			serializer.save(user=request.user)
+			return Response({"message":"Successfully added user data","flag":1},status=status.HTTP_201_CREATED)
+		return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+	def put(self, request, format=None):
+		info = UserInfo.objects.get(user=request.user.pk)
+		serializer = UserInfoSerializer(info,data=request.data)
+		
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serialzer.data)	
+			
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)	

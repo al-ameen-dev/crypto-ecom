@@ -13,6 +13,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
@@ -81,8 +82,9 @@ export default function Cart() {
     setTotal(0)
   };
   
-  const handleDelete = (event) =>{
-		  axios.delete(cartDeleteUrl+event.target.value,{headers:{
+  const handleDelete = (id) =>{
+  			console.log(id)
+		  axios.delete(cartDeleteUrl+id,{headers:{
     		"Authorization":"Bearer "+token
     		}}).then((response)=>{
 			console.log("deleted succes")
@@ -119,17 +121,17 @@ export default function Cart() {
         		{items.map(item=>(
         		<Container sx={{display:'flex' , flexDirection:'row',p:1}}>
         		<img height='65px' width='65px' src={item.imgurl} />
-        		<Divider orientation="vertical" sx={{m:3}}flexItem />
-        		<Typography gutterBottom>
+        		<Divider orientation="vertical" sx={{m:3}} flexItem />
+        		<Typography gutterBottom >
            		{item.name}
           	</Typography>
-          	<Divider orientation="vertical" sx={{m:3}}flexItem />
-          	<Typography gutterBottom>
-           		{item.price}
+          	<Divider orientation="vertical" sx={{m:3}} flexItem />
+          	<Typography gutterBottom sx={{flexGrow:1}}>
+           				₹{item.price}
           	</Typography>
-          	<Divider orientation="vertical" sx={{m:3}}flexItem />
-          	<IconButton onClick={handleDelete} value={item.id}color="primary" aria-label="add to shopping cart">
-        			<ShoppingCartOutlinedIcon fontSize='small'/> Remove Item
+          	<Divider orientation="vertical" sx={{m:3}} flexItem />
+          	<IconButton onClick={()=>handleDelete(item.id)} value={item.id} color="primary" aria-label="add to shopping cart">
+        			<DeleteOutlineOutlinedIcon fontSize='small'/> <Typography fontSize='small'>Remove Item</Typography>
         		</IconButton>
           	</Container>))}
         </DialogContent>

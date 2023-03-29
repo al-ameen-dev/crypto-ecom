@@ -99,6 +99,9 @@ const HomePage = () =>{
 			height:'100%',
 			width:'100%',		
 		},
+		center:{
+			textAlign:'center',		
+		}
 		
 	 }
 	 //inputProps={{ 'aria-label': 'search google maps' }}
@@ -127,8 +130,6 @@ const HomePage = () =>{
     						</FormControl>
     						<Divider sx={{mt:4}}/>
      	 					<Typography variant='h6' sx={{mt:1}}>Price₹  Below</Typography>
-     	 					{/*<Slider aria-label="Price" onChange={handleSliderChange} defaultValue={300} getAriaValueText={valuetext} valueLabelDisplay='auto' 
-							 step={step}marks min={minRange} max={maxRange} />*/}
 							<Paper elevation={10}>							 
 							 	<InputBase sx={{ ml: 1 }} onChange={handlePriceInput} placeholder="price" value={price} id='pricebelow' inputProps={{ 'aria-label': 'price' }}/>
 								<IconButton onClick={handlePriceBelow} type="button" sx={{ p: '10px' }} aria-label="search">

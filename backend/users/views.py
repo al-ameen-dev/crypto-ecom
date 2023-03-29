@@ -4,14 +4,13 @@ from rest_framework import permissions, status
 # from django.contrib.auth import get_user_model
 # User = get_user_model()
 from .serializers import UserCreateSerializer,UserSerializer
+#from .models import UserProfile
 
 
 class RegisterView(APIView):
     def post(self,request):
         data = request.data
-        print('data = ',data)
         serializer = UserCreateSerializer(data=data)
-
         if not serializer.is_valid():
         		print('errors:',serializer.errors)
         		return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)

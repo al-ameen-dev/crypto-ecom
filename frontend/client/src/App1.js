@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import HomePage from 'containers/HomePage';
 import LoginPage from 'containers/LoginPage';
 import RegisterPage from 'containers/RegisterPage';
+import Profile from 'containers/Profile';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import IconButton from '@mui/material/IconButton';
@@ -54,6 +55,7 @@ export default function App(){
           		<Route path="/" element={<HomePage />} />
           		<Route path="/signin" element={<LoginPage />} />
           		<Route path="/signup" element={<RegisterPage />} />
+          		<Route path="/profile" element={<Profile />} />
           		<Route path="*" element={<Navigate to="/" replace />} />
         		</Routes>
 		</Provider>	

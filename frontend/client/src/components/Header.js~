@@ -44,13 +44,14 @@ export default function Header(props){
 			if(localStorage.getItem("mydata") !== null)
 			{
 				const storedata = JSON.parse(localStorage.getItem("mydata"));
-    			if(storedata && storedata.expirytime > new Date().getTime())
+    			if(storedata && storedata.expirytime < new Date().getTime())
     			{
-					console.log('checking')
+					alert("Session Timeout logging out relogin to continue")
+					localStorage.removeItem("mydata")
+					dispatch(setLogout())
     			}
     			else{
-					localStorage.removeItem("mydata")
-					dispatch(setLogout())   			
+    				console.log('checking')
     			}
 			}
   	 	},5000)
@@ -81,7 +82,7 @@ export default function Header(props){
       
 
     }
-    return ()=> clearInterval(interval);
+    //return ()=> clearInterval(interval);
   },[])
   
 	

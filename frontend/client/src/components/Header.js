@@ -44,12 +44,9 @@ export default function Header(props){
 			if(localStorage.getItem("mydata") !== null)
 			{
 				const storedata = JSON.parse(localStorage.getItem("mydata"));
-    			if(storedata && storedata.expirytime > new Date().getTime())
+    			if(storedata && storedata.expirytime < new Date().getTime())
     			{
-					console.log('checking')
-    			}
-    			else{
-    				alert("Session Timeout logging out relogin to continue")
+					alert("Session Timeout logging out relogin to continue")
 					localStorage.removeItem("mydata")
 					dispatch(setLogout())
     			}
@@ -82,7 +79,7 @@ export default function Header(props){
       
 
     }
-    return ()=> clearInterval(interval);
+    //return ()=> clearInterval(interval);
   },[])
   
 	

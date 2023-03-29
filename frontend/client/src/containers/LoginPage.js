@@ -52,7 +52,7 @@ export default function LoginPage() {
       password: data.get('password'),
     };
     axios.post(LoginUrl,info).then((response) => {
-    	const expirytime = new Date().getTime()+(10*60*1000)
+    	const expirytime = new Date().getTime()+(30*60*1000)
     	const tokendata ={token:response.data.access}
     	localStorage.setItem('mydata',JSON.stringify({tokendata,expirytime}))
 	  	navigate("/")
