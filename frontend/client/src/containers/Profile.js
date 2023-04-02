@@ -112,117 +112,145 @@ const Profile = () =>{
 			 })
 			}
 	 }
+	 const styles = {
+		container:{ 	
+			width:'90%',
+		},
+		trans:{
+			bgcolor:'grey.100',
+			marginTop:'2rem',
+		},
+		holder:{
+			display:'flex',
+			flexDirection:'row',
+			flexWrap:'wrap',
+			alignItems:'center',
+		},
+		itemSearch:{
+			background:'none',
+			elevation:0,
+	
+		},
+		emptyGrid:{
+			height:'100%',
+			width:'100%',		
+		},
+		
+	 }
     return(
         <Layout title="Profile" content="Dashboard Page">
-            <Container component="main" >
-    <CssBaseline />
-    <Box
-        sx={{
-        marginTop: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        }}
-    >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        <PersonPinOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-            User Profile
-        </Typography>
-        <Box component="form" noValidate onSubmit={updateflag ? handleUpdate : handleSubmit} sx={{ mt: 3 }}>
-        <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-            <TextField
-                value={user.first_name}
-                name="firstName"
-                fullWidth
-                id="firstName"
-                autoComplete
-                size="small"
-            />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-            <TextField
-                value={user.last_name}
-                fullWidth
-                id="lastName"
-                name="lastName"
-                size="small"
-            />
-            </Grid>
-            <Grid item xs={12}>
-            <TextField
-                value={user.email}
-                fullWidth
-                id="email"
-                name="email"
-                size="small"
-            />
-            </Grid>
-            <Grid item xs={12}>
-            <TextField
-            	 multiline
-            	 maxRows={4}
-                required
-                fullWidth
-                name="address"
-                onChange={handleAddressChange}
-                value={infoData.address}
-                label={updateflag && infoData.address !== '' ? "":"Shipping Address"}
-                id="address"
-                autoComplete="Shipping-adress"
-                size="small"
-            />
-            </Grid>
-            <Grid item xs={12}>
-            <TextField
-                required
-                fullWidth
-                onChange={handlePincodeChange}
-                value={infoData.pincode}
-                id="pincode"
-                label={updateflag && infoData.pincode !== '' ? "":"Pin code"}
-                name="pincode"
-                autoComplete="pincode"
-                size="small"
-            />
-            </Grid>
-            <Grid item xs={12}>
-            <TextField
-                required
-                fullWidth
-                id="city"
-                onChange={handleCityChange}
-                value={infoData.city}
-                label={updateflag && infoData.city !== '' ? "":"City"}
-                name="city"
-                autoComplete="city"
-                size="small"
-            />
-            </Grid>
-            <Grid item xs={12}>
-            <TextField
-                required
-                fullWidth
-                id="state"
-                onChange={handleStateChange}
-                value={infoData.state}
-                label={updateflag && infoData.state !== ''  ? "":"State"}
-                name="state"
-                autoComplete="email"
-                size="small"
-            />
-            </Grid>
-        </Grid>
-        <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
-            { updateflag ? "Update Profile" : "Submit Profile"}	
-        </Button>
-        </Box>
-    </Box>
+    				<CssBaseline />
+    <Container>
+    	<Grid container spacing={2} direction='row'>			
+			<Grid item xs={12} md={6} >
+				<Box sx={{ display: 'flex',mr:3,ml:3,flexDirection: 'column',alignItems: 'center',}}>
+					<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        				<PersonPinOutlinedIcon />
+        			</Avatar>
+        			<Typography component="h1" variant="h5">
+            		User Profile
+        			</Typography>
+        		</Box>
+				<Box component="form" noValidate onSubmit={updateflag ? handleUpdate : handleSubmit} sx={{ mt: 3 }}>
+					<Grid container spacing={2}>
+						<Grid item xs={12} sm={6}>
+            			<TextField
+                			value={user.first_name}
+                			name="firstName"
+                			fullWidth
+                			id="firstName"
+                			autoComplete
+                			size="small"
+           	 			/>
+            		</Grid>
+            		<Grid item xs={12} sm={6}>
+            			<TextField
+                			value={user.last_name}
+                			fullWidth
+                			id="lastName"
+                			name="lastName"
+                			size="small"
+            			/>
+            		</Grid>
+            		<Grid item xs={12}>
+            			<TextField
+                			value={user.email}
+                			fullWidth
+                			id="email"
+                			name="email"
+                			size="small"
+            			/>
+            		</Grid>
+            		<Grid item xs={12}>
+            			<TextField
+            	 			multiline
+            	 			maxRows={4}
+                			required
+                			fullWidth
+                			name="address"
+                			onChange={handleAddressChange}
+                			value={infoData.address}
+                			label={updateflag && infoData.address !== '' ? "":"Shipping Address"}
+                			id="address"
+                			autoComplete="Shipping-adress"
+                			size="small"
+            			/>
+            		</Grid>
+            		<Grid item xs={12}>
+            			<TextField
+                			required
+                			fullWidth
+                			onChange={handlePincodeChange}
+                			value={infoData.pincode}
+                			id="pincode"
+                			label={updateflag && infoData.pincode !== '' ? "":"Pin code"}
+                			name="pincode"
+                			autoComplete="pincode"
+                			size="small"
+            			/>
+            		</Grid>
+            		<Grid item xs={12}>
+            			<TextField
+                			required
+                			fullWidth
+                			id="city"
+                			onChange={handleCityChange}
+                			value={infoData.city}
+                			label={updateflag && infoData.city !== '' ? "":"City"}
+                			name="city"
+                			autoComplete="city"
+                			size="small"
+            			/>
+            		</Grid>
+            		<Grid item xs={12}>
+            			<TextField
+                			required
+                			fullWidth
+                			id="state"
+                			onChange={handleStateChange}
+                			value={infoData.state}
+                			label={updateflag && infoData.state !== ''  ? "":"State"}
+                			name="state"
+                			autoComplete="email"
+                			size="small"
+            			/>
+            		</Grid>
+					</Grid>
+						<Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
+            			{ updateflag ? "Update Profile" : "Submit Profile"}	
+        				</Button>
+				</Box> 						
+			</Grid>
+			<Grid container xs={12} md={6} direction='row'>
+ 					<Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
+            			{ updateflag ? "Update Profile" : "Submit Profile"}	
+        				</Button>	
+			</Grid>
+		</Grid>
     </Container>
+
     
-        </Layout>
+ </Layout>
     )
 }
 

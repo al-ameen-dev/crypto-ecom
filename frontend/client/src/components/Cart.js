@@ -119,7 +119,7 @@ export default function Cart() {
         </BootstrapDialogTitle>
         <DialogContent dividers>
         		{items.map(item=>(
-        		<Container sx={{display:'flex' , flexDirection:'row',p:1}}>
+        		<Container key={item.id} sx={{display:'flex' , flexDirection:'row',p:1}}>
         		<img height='65px' width='65px' src={item.imgurl} />
         		<Divider orientation="vertical" sx={{m:3}} flexItem />
         		<Typography gutterBottom >

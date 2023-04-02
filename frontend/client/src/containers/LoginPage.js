@@ -12,6 +12,7 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LoginIcon from '@mui/icons-material/Login';
+import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { grey } from "@mui/material/colors";
@@ -79,6 +80,8 @@ export default function LoginPage() {
 
   return (
     <Layout title="Login" content="Login Page">
+		<Container>    	
+    	<Paper elevation={10}>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -89,7 +92,7 @@ export default function LoginPage() {
           }}
           
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ mt: 5, bgcolor: 'secondary.main' }}>
             <LoginIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -132,7 +135,7 @@ export default function LoginPage() {
                   Forgot password?
                 </Link>
               </Grid>*/}
-              <Grid item>
+              <Grid item sx={{mb:5}}>
                 <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
@@ -140,7 +143,8 @@ export default function LoginPage() {
             </Grid>
           </Box>
         </Box>
-        
+      </Container>
+      </Paper>
       </Container>
     </Layout>
   );

@@ -79,7 +79,6 @@ export default function RegisterPage() {
   			console.log(response.data);
   			navigate('/login')
   		}).catch((error) => {
-	  		console.error(error);
 	  		enqueueSnackbar(error.response.data.email[0],{ variant: "info",anchorOrigin:{vertical:'top',horizontal:'center'}})
 		});
 	};
@@ -109,6 +108,8 @@ const handleBlurEmailChange = (event) =>{
 }
 return (
 <Layout title="Register" content="Register Page">
+	<Container>
+	 <Paper elevation={10}>
     <Container component="main" maxWidth="xs">
     <CssBaseline />
     <Box
@@ -119,7 +120,7 @@ return (
         alignItems: 'center',
         }}
     >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <Avatar sx={{ mt: 5, bgcolor: 'secondary.main' }}>
         <HowToRegIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -201,6 +202,8 @@ return (
         </Grid>
         </Box>
     </Box>
+    </Container>
+    </Paper>
     </Container>
 </Layout>
 );

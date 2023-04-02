@@ -55,6 +55,7 @@ export default function Header(props){
 					alert("Session Timeout logging out relogin to continue")
 					localStorage.removeItem("mydata")
 					dispatch(setLogout())
+					navigate('/')
     			}
 			}
   	 	},5000)

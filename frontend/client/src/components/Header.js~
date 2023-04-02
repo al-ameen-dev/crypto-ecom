@@ -97,7 +97,7 @@ export default function Header(props){
         		})
     }
     //return ()=> clearInterval(interval);
-  },[])
+  },[isAuthenticated])
   
 	
   const handleClickOpen = () => {

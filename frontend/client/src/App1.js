@@ -17,6 +17,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { Provider } from 'react-redux';
 import { store } from 'features/store';
 import { useState, useEffect } from 'react'
+import Payment from "components/Payment";
 
 export default function App(){
 	
@@ -56,6 +57,7 @@ export default function App(){
           		<Route path="/signin" element={<LoginPage />} />
           		<Route path="/signup" element={<RegisterPage />} />
           		<Route path="/profile" element={<Profile />} />
+          		<Route path="/payment" element={<Payment />} />
           		<Route path="*" element={<Navigate to="/" replace />} />
         		</Routes>
 		</Provider>	

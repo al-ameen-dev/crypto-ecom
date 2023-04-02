@@ -37,8 +37,8 @@ export default function Hero(){
 			display:'flex',
 			flexDirection:'column',
 			alignItems:'center',
-			background:'none',
 			justifyContent:'center',
+			color:'primary.dark',	
 			height:500,
 		},
 	}

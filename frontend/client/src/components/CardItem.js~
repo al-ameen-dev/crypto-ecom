@@ -60,7 +60,7 @@ export default function CardItem({name, price, imgurl, product_description ,item
   }
   return (
     <Card sx={{ maxWidth: 250,margin:2.5 }}>
-      <CardMedia style={styles.img} component="img" alt="green iguana" height="150" width="50" image={imgurl} />
+      <CardMedia style={styles.img} component="img" alt="green iguana" height="150" width="70" image={imgurl} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {name}

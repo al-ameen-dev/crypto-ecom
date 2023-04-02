@@ -55,7 +55,7 @@ class UserCart(APIView):
 		request.data['user'] = request.user.pk
 		pname = request.data["name"]
 		try:
-			item = CartItem.objects.get(name=pname)
+			item = CartItem.objects.get(name=pname,checked_out=False)
 			return Response({"message":"Already added to the cart"},status=status.HTTP_200_OK)
 		except CartItem.DoesNotExist:
 			serializer = CartSerializer(data=request.data)

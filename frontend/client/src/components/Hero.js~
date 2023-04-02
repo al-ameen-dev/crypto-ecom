@@ -37,15 +37,15 @@ export default function Hero(){
 			display:'flex',
 			flexDirection:'column',
 			alignItems:'center',
-			background:'none',
 			justifyContent:'center',
-			height:700,
+			color:'primary.dark',	
+			height:500,
 		},
 	}
  	return( 
  		<Collapse in={checked} {...(checked ? {timeout:1000}:{})} collapsedSize={40}>
 			<Container sx={styles.hero}>
-			<Typography variant='h3' sx={styles.title}>
+			<Typography variant='h3' sx={styles.hero}>
 				the decentralized <Typography variant='h3' component='span' sx={styles.yellowish}> online shopping </Typography>
 			</Typography>
 			<Scroll to='sliding' smooth={true}>

@@ -69,6 +69,7 @@ class UserCart(APIView):
 		item.delete()
 		return Response(status=status.HTTP_204_NO_CONTENT)
 
+#this class based view is used to retrieve, create and update the userprofile
 class Userprofile(APIView):
 	permission_classes = [IsAuthenticated]
 	

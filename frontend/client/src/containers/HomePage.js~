@@ -37,8 +37,8 @@ const HomePage = () =>{
 	
 	const productsurl = 'http://127.0.0.1:8000/api/products/all'
 	const categoryurl = 'http://127.0.0.1:8000/api/products/'
-	//const userInfoUrl = 'http://127.0.0.1:8000/api/products/userinfo'
 	useEffect(() =>{
+				localStorage.setItem("amount",100);
 				axios.get(categoryurl+category).then((response)=>{
 				setProducts(response.data)
 				console.log(products)
@@ -112,12 +112,18 @@ const HomePage = () =>{
 				<Box id='sliding' height={55}/>        		
         		<Container sx={styles.trans}>
         			<Grid container spacing={2} direction='row'>
-						<Grid item xs={12} md={3} >
-							<Paper elevation={10}>	
-								<InputBase onChange={handleSearch} sx={{ ml: 1, flex: 1 }} placeholder="Search Products" inputProps={{ 'aria-label': 'search products' }}/>
-      						<IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-        							<SearchIcon />
-     	 						</IconButton>
+						<Grid item xs={12} sm={12} md={3} >
+							<Paper elevation={10}>
+								<Grid container direction='row'>
+									<Grid item xs={10} sm={10} md={10}>
+										<InputBase onChange={handleSearch} sx={{ ml: 1, flex: 1,mt:1 }} placeholder="Search Products" inputProps={{ 'aria-label': 'search products' }}/>
+									</Grid>
+									<Grid item xs={2} sm={2} md={2}>  						
+      								<IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+        									<SearchIcon />
+     	 								</IconButton>
+     	 							</Grid>
+     	 						</Grid>
      	 					</Paper>
      	 					<Divider sx={{mt:4}}/>
      	 					<Typography variant='h5'>Filters</Typography>
@@ -130,20 +136,28 @@ const HomePage = () =>{
       						</RadioGroup>
     						</FormControl>
     						<Divider sx={{mt:4}}/>
-     	 					<Typography variant='h6' sx={{mt:1}}>Price₹  Below</Typography>
-							<Paper elevation={10}>							 
-							 	<InputBase sx={{ ml: 1 }} onChange={handlePriceInput} placeholder="price" value={price} id='pricebelow' inputProps={{ 'aria-label': 'price' }}/>
-								<IconButton onClick={handlePriceBelow} type="button" sx={{ p: '10px' }} aria-label="search">
-        							<SearchIcon />
-     	 						</IconButton>						
+     	 					<Typography variant='h6' sx={{mt:1}}>₹ Price  Below</Typography>
+							<Paper elevation={10}>
+								<Grid container direction='row'>
+									<Grid item xs={10} sm={10} md={10}>							 
+							 			<InputBase sx={{ ml: 1,mt:1 }} onChange={handlePriceInput} placeholder="price" value={price} id='pricebelow' inputProps={{ 'aria-label': 'price' }}/>
+									</Grid>
+									<Grid item xs={2} sm={2} md={2}>								
+										<IconButton onClick={handlePriceBelow} type="button" sx={{ p: '10px' }} aria-label="search">
+        									<SearchIcon />
+     	 								</IconButton>
+     	 							</Grid>
+     	 						</Grid>						
 							</Paper>     	 					
-     	 					
-						</Grid>
-						
-						<Grid container xs={12} md={9} direction='row'>
- 							{products.map(item=>(
-							<CardItem key={item.id} name={item.name} price={item.price} imgurl={item.imgurl} product_description={item.product_description} item={item}/>
-							))}
+     	 				</Grid>
+						<Grid item xs={12} sm={12} md={9}>
+							<Grid container spacing={1} direction='row'>
+ 								{products.map(item=>(
+ 									<Grid key={item.id} item xs={12} sm={6} md={4}>
+										<CardItem key={item.id} name={item.name} price={item.price} imgurl={item.imgurl} product_description={item.product_description} item={item}/>
+									</Grid>							
+								))}
+							</Grid>
 						</Grid>        			
         			</Grid>
             </Container>

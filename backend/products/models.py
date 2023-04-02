@@ -14,7 +14,13 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-        
+class PurchasedProduct(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	name = models.CharField(max_length=100)
+	price = models.IntegerField()
+	imgurl = models.CharField(max_length=400)
+	#purchasedat = models.DateTimeField(auto)	
+	
 class CartItem(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	name = models.CharField(max_length=100)
@@ -35,5 +41,6 @@ class UserInfo(models.Model):
 	
 	def __str__(self):
 		return self.user.first_name+' '+self.user.last_name+' profile'
+		
 
 	
