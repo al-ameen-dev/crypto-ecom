@@ -19,8 +19,11 @@ class PurchasedProduct(models.Model):
 	name = models.CharField(max_length=100)
 	price = models.IntegerField()
 	imgurl = models.CharField(max_length=400)
-	#purchasedat = models.DateTimeField(auto)	
+	purchased_at = models.DateTimeField(auto_now_add=True)	
 	
+	def __str__(self):
+		return self.name+' user '+self.user.first_name+' '+self.user.last_name
+		
 class CartItem(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	name = models.CharField(max_length=100)

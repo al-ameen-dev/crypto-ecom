@@ -15,6 +15,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -60,6 +61,7 @@ export default function Cart() {
   const [open, setOpen] = useState(false);
   const [items,setItems] = useState([]);
   const [total,setTotal] = useState(0)
+  const navigate = useNavigate()
   const { token } = useSelector(state=>state.user);
   const cartUrl = 'http://127.0.0.1:8000/api/products/cart';
   const cartDeleteUrl = 'http://127.0.0.1:8000/api/products/cart/delete/'
@@ -101,6 +103,11 @@ export default function Cart() {
     		console.log(error)
     })
   };
+  
+  const handlePayment = ()=>{
+		localStorage.setItem("amount",total);
+		navigate("/payment");
+  }
 
   return (
     <>
@@ -144,7 +151,7 @@ export default function Cart() {
            				₹{total}
           	</Typography>
           </Container>
-          <Button variant='contained' autoFocus onClick={handleClose}>
+          <Button variant='contained' autoFocus onClick={handlePayment}>
             <ShoppingCartCheckoutIcon />Checkout
           </Button>
         </DialogActions>

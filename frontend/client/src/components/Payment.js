@@ -10,12 +10,19 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+
 
 
 function Payment() {
 	const coinbaseapiurl = 'https://api.coinbase.com/v2/prices/ETH-INR/spot'
+	
+	const purchaseUrl = 'http://127.0.0.1:8000/api/products/purchase'
 
   const [amount, setAmount] = useState(0);
+
+	const { token, isAuthenticated } = useSelector(state =>state.user)  
   
   const [cryptoTokens,setCryptoTokens] = useState(0);
   
@@ -40,6 +47,10 @@ function Payment() {
 
 	useEffect(()=>{
 		setAmount(localStorage.getItem("amount"))
+		if(isAuthenticated === false)
+		{
+			navigate('/');
+		}
 	},[])			
   const handleCurrencyChange = (event) => {
     setCryptocurrency(event.target.value);
@@ -95,15 +106,21 @@ function Payment() {
         console.log(transactionResponse);
     
         setTransaction(transactionResponse);
-        navigate("/payment")
-    
-        enqueueSnackbar("Order placed successfully!",{variant:"success"});
+        axios.get(purchaseUrl,{
+				headers:{
+          		'Authorization': 'Bearer '+token,
+        		}}).then((response)=>{
+					console.log(response.data)        			
+        		});
+        	
+        enqueueSnackbar("Order placed successfully!",{ variant: "success",anchorOrigin:{vertical:'top',horizontal:'center'}});
+        navigate("/")
       
       }
       catch (error){
-        enqueueSnackbar("Payment failed!", {variant:"error"});
+        enqueueSnackbar("Payment failed!", {variant:"error",anchorOrigin:{vertical:'top',horizontal:'center'}});
         setError(error.message);
-        navigate("/payment")
+        //navigate("/payment")
       }
     }
 
@@ -131,7 +148,7 @@ function Payment() {
      <Container>
      <Paper elevation={10}>
      <Container component="main" maxWidth="xs" >
-        <Box spacing={2} sx={{ marginTop: 2,display: 'flex',flexDirection: 'column',alignItems: 'center',}}>
+        <Box spacing={2} sx={{ display: 'flex',flexDirection: 'column',alignItems: 'center',}}>
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <CurrencyBitcoinIcon />
           </Avatar>
@@ -157,8 +174,8 @@ function Payment() {
       </FormControl>
       	<Typography sx={{mt:5}} >Destination Address: {address}</Typography>
       	<Typography sx={{mt:3}} >Total Price in INR: ₹{amount}</Typography>
-      	<Typography sx={{mt:3}} >Equivalent {cryptocurrency} Tokens: {cryptoTokens} eth</Typography> 
-      <Button onClick={startPayment}>Send Payment</Button>
+      	<Typography sx={{mt:3,mb:3}} >Equivalent {cryptocurrency} Tokens: {cryptoTokens} eth</Typography> 
+      <Button sx={{mb:5}} onClick={startPayment} variant='contained'>Proceed to Pay</Button>
     </Box>
     </Container>
     </Paper>

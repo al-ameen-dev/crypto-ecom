@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
-from .models import Product, CartItem, UserInfo
-from .serializers import ProductSerializer, CartSerializer, UserInfoSerializer
+from .models import Product, CartItem, UserInfo, PurchasedProduct
+from .serializers import ProductSerializer, CartSerializer, UserInfoSerializer, PurchasedProductSerializer
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, generics
@@ -99,3 +99,27 @@ class Userprofile(APIView):
 			return Response({"message":"Successfully updated user data"},status=status.HTTP_201_CREATED)
 			
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)	
+
+class PurchaseHistory(APIView):
+	permission_classes = [IsAuthenticated]
+	def get(self, request, format=None):
+		pitems = PurchasedProduct.objects.filter(user=request.user.pk)
+		serializer = PurchasedProductSerializer(pitems,many=True)
+		return Response(serializer.data)
+class Purchase(APIView):
+	permission_classes = [IsAuthenticated]
+	def get(self, request, format=None):
+		cartdata = CartItem.objects.filter(user=request.user.pk)
+		for item in cartdata:
+			purchaseItem = PurchasedProduct.objects.create(user=request.user,name=item.name,price=item.price,imgurl=item.imgurl)
+			purchaseItem.save()
+			item.delete()
+		
+		return Response({"message":"success"},status=status.HTTP_200_OK)
+		
+			
+		
+	'''def post(self, request, format=None):
+		request.data['user'] = request.user.pk
+		
+		serializer = PurchasedProductSerializer(data=request.data)'''		

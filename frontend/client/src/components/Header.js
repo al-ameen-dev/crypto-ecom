@@ -110,6 +110,7 @@ export default function Header(props){
 	
 	const handleLogout = () =>{
     localStorage.removeItem("mydata")
+    localStorage.removeItem("amount")
 		dispatch(setLogout())	
 	}
 	const handleDrawerToggle = () => {
