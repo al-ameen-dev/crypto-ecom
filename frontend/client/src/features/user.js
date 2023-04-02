@@ -3,7 +3,9 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   isAuthenticated:false,
   user:null,
+  userinfo:{},
   token:"",
+  updateflag:false,
   loading:false,
   registered:false,
 }
@@ -26,14 +28,20 @@ export const userSlice = createSlice({
       state.isAuthenticated = false;
       state.registered = false;
       state.token = '';
+      state.userinfo = "";
+		state.updateflag = false;
     },
     setToken:(state,action)=>{
 		state.token = action.payload;
+    },
+    setUserInfo:(state,action)=>{
+		state.userinfo = action.payload;
+		state.updateflag = true;
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { resetRegistered, setLogin, setUser, setLogout, setToken } = userSlice.actions
+export const { resetRegistered, setLogin, setUser, setLogout, setToken, setUserInfo } = userSlice.actions
 
 export default userSlice.reducer

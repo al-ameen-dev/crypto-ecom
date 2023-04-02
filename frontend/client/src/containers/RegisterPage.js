@@ -10,14 +10,15 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 import axios from 'axios';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useSnackbar } from 'notistack';
 
 /*function Copyright(props) {
 return (
@@ -41,8 +42,17 @@ const RegisterUrl = 'http://127.0.0.1:8000/api/users/register'
 
 export default function RegisterPage() {
 	
-	const navigate = useNavigate()
-	const { isAuthenticated } = useSelector(state =>state.user)
+	const [firstName,setFirstName] = useState('');
+	const [lastName,setLastName] = useState('');
+	const [email,setEmail] = useState('');
+	const [password,setPassword] = useState('');
+	const [errors,setErrors] = useState([]);
+	const navigate = useNavigate();
+	const { enqueueSnackbar } = useSnackbar();
+	const { isAuthenticated } = useSelector(state =>state.user);
+	
+	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	
 	if(isAuthenticated === true)
     {
 		navigate("/")
@@ -50,26 +60,52 @@ export default function RegisterPage() {
     }
 	const handleSubmit = (event) => {
 	event.preventDefault();
-	const data = new FormData(event.currentTarget);
-	console.log(data)
-	const info = {
-		first_name: data.get('firstName'),
-    	last_name: data.get('lastName'),
-    	email:data.get('email'),
-    	password:data.get('password')
-    }
-   axios.post(RegisterUrl,info, {
-		headers:{
-			'Content-Type':'application/json'		
-		}
-		}).then((response) => {
-  		console.log(response.data);
-  		navigate('/login')
-  	}).catch((error) => {
-	  console.error(error);
-	});
-};
+	if(((firstName === '') || (lastName === '') || (email === '') || (password === '')) && !emailRegex.test(event.target.value))
+	{
+			enqueueSnackbar("Fields can not be empty",{ variant: "error",anchorOrigin:{vertical:'top',horizontal:'center'}})
+	}
+	else{
+		const info = {
+			first_name: firstName,
+    		last_name:lastName,
+    		email:email,
+    		password:password
+    	}
+   	axios.post(RegisterUrl,info, {
+			headers:{
+				'Content-Type':'application/json'		
+				}
+			}).then((response) => {
+  			console.log(response.data);
+  			navigate('/login')
+  		}).catch((error) => {
+	  		enqueueSnackbar(error.response.data.email[0],{ variant: "info",anchorOrigin:{vertical:'top',horizontal:'center'}})
+		});
+	};
+}
+const handleFnameChange = (event)=>{
+	setFirstName(event.target.value)
+}
 
+const handleLnameChange = (event)=>{
+	setLastName(event.target.value)
+}
+
+const handleEmailChange = (event)=>{
+	setEmail(event.target.value)
+}
+
+const handlePasswordChange = (event)=>{
+	setPassword(event.target.value)	
+}
+
+const handleBlurEmailChange = (event) =>{
+	const isValidEmail = emailRegex.test(event.target.value); // true
+	if(isValidEmail !== true)
+	{
+		enqueueSnackbar("Enter a valid email address",{ variant: "info",anchorOrigin:{vertical:'top',horizontal:'center'}})
+	}
+}
 return (
 <Layout title="Register" content="Register Page">
     <Container component="main" maxWidth="xs">
@@ -83,7 +119,7 @@ return (
         }}
     >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        <LockOutlinedIcon />
+        <HowToRegIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
             Sign up
@@ -92,44 +128,51 @@ return (
         <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
             <TextField
-                autoComplete="given-name"
+            	 value={firstName}
                 name="firstName"
-                required
                 fullWidth
                 id="firstName"
                 label="First Name"
+                size='small'
                 autoFocus
+                onChange={handleFnameChange}
             />
             </Grid>
             <Grid item xs={12} sm={6}>
             <TextField
-                required
                 fullWidth
+                value={lastName}
                 id="lastName"
                 label="Last Name"
                 name="lastName"
-                autoComplete="family-name"
+                size='small'
+                onChange={handleLnameChange}
             />
             </Grid>
             <Grid item xs={12}>
             <TextField
                 required
                 fullWidth
+                size='small'
+                value={email}
                 id="email"
                 label="Email Address"
                 name="email"
-                autoComplete="email"
+                onBlur={handleBlurEmailChange}
+                onChange ={handleEmailChange}
             />
             </Grid>
             <Grid item xs={12}>
             <TextField
                 required
+                value={password}
                 fullWidth
+                size='small'
                 name="password"
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="new-password"
+                onChange={handlePasswordChange}
             />
             </Grid>
             {/* <Grid item xs={12}>

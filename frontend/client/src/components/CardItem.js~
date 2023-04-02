@@ -70,8 +70,8 @@ export default function CardItem({name, price, imgurl, product_description ,item
           {product_description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button sx={styles.center} onClick={handleAddCart} size="small" variant='contained'>Add To Cart<AddShoppingCartOutlinedIcon /></Button>
+      <CardActions sx={styles.center}>
+        <Button onClick={handleAddCart} size="small" variant='contained'>Add To Cart<AddShoppingCartOutlinedIcon /></Button>
       </CardActions>
     </Card>
   );

@@ -69,6 +69,7 @@ class UserCart(APIView):
 		item.delete()
 		return Response(status=status.HTTP_204_NO_CONTENT)
 
+#this class based view is used to retrieve, create and update the userprofile
 class Userprofile(APIView):
 	permission_classes = [IsAuthenticated]
 	
@@ -76,8 +77,9 @@ class Userprofile(APIView):
 		try:
 			info = UserInfo.objects.get(user=request.user.pk)
 			serializer = UserInfoSerializer(info)
-			serialzer.data['flag'] = 1
-			return Response(serializer.data)
+			print('already existed')
+			res = {'user':serializer.data,'flag':1}
+			return Response(res)
 		except UserInfo.DoesNotExist:
 			return Response({"message":"Please provide the information below","flag":0},status=status.HTTP_201_CREATED)
 	def post(self, request, format=None):
@@ -94,6 +96,6 @@ class Userprofile(APIView):
 		
 		if serializer.is_valid():
 			serializer.save()
-			return Response(serialzer.data)	
+			return Response({"message":"Successfully updated user data"},status=status.HTTP_201_CREATED)
 			
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)	

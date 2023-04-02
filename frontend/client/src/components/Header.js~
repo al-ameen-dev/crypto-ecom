@@ -16,17 +16,23 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import CloseIcon from '@mui/icons-material/Close';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import HomeIcon from '@mui/icons-material/Home';
+import PersonPinOutlinedIcon from '@mui/icons-material/PersonPinOutlined';
 //import Login from 'components/Login';
 import {  } from 'features/user';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setLogout, setUser, setLogin, setToken } from 'features/user';
+import { setLogout, setUser, setLogin, setToken, setUserInfo } from 'features/user';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 
 
 const drawerWidth = 240;
 const meUrl = 'http://127.0.0.1:8000/api/users/me'
+const userInfoUrl = 'http://127.0.0.1:8000/api/products/userinfo'
 
 export default function Header(props){
 	
@@ -35,7 +41,7 @@ export default function Header(props){
 	const navigate = useNavigate();
 	const { window } = props;
 	const [mobileOpen, setMobileOpen] = useState(false);
-	const { isAuthenticated, user} = useSelector(state => state.user);
+	const { isAuthenticated, user, token} = useSelector(state => state.user);
 	const [open, setOpen] = useState(false);
   
   useEffect(()=>{
@@ -49,9 +55,6 @@ export default function Header(props){
 					alert("Session Timeout logging out relogin to continue")
 					localStorage.removeItem("mydata")
 					dispatch(setLogout())
-    			}
-    			else{
-    				console.log('checking')
     			}
 			}
   	 	},5000)
@@ -81,6 +84,17 @@ export default function Header(props){
     	}
       
 
+    }
+    if(isAuthenticated){
+    	axios.get(userInfoUrl,{
+				headers:{
+          		'Authorization': 'Bearer '+token,
+        		}}).then((response)=>{
+					if(response.data.flag === 1)
+					{
+						dispatch(setUserInfo(response.data.user))
+					}
+        		})
     }
     //return ()=> clearInterval(interval);
   },[])
@@ -121,6 +135,7 @@ export default function Header(props){
 		},
 		txtBlack:{
 			color:'#000',
+			textTransform:'none'
 		},
 		
 		appbarTitle:{
@@ -144,10 +159,10 @@ export default function Header(props){
 	const authLinks = (
     <>
       <Button key="Profile" sx={styles.txtBlack} component={RouterLink} to="/profile" >
-        MyProfile
+        <PersonPinOutlinedIcon />MyProfile
       </Button>
       <Button key="Logout"  onClick={handleLogout} sx={styles.txtBlack} component={RouterLink} to="/" >
-        Logout
+        <LogoutIcon />Logout
       </Button>
     </>
     
@@ -156,10 +171,10 @@ export default function Header(props){
   const guestLinks = (
     <>
       <Button key="Login" sx={styles.txtBlack} component={RouterLink} to="/signin">
-        Signin
+	     		 <LoginIcon />Signin
       </Button>
       <Button key="Register" sx={styles.txtBlack} component={RouterLink} to="/signup">
-        Signup
+        <HowToRegIcon />Signup
       </Button>
     </>
   )
@@ -197,9 +212,11 @@ export default function Header(props){
 	
 	const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center'}}>
-      <Typography variant="h6" sx={{ my: 2,color:'#000'}}>
-        CRYPTO
-      </Typography>
+   		<Button component={RouterLink} to='/'>
+   			<Typography variant="h6" sx={{ my: 2,color:'#000'}}>
+	        		CRYPTO
+	        	</Typography>
+	      </Button>
       <Divider />
       <List>
           <ListItem key="Home" component={RouterLink} to="/" disablePadding>
@@ -230,12 +247,12 @@ export default function Header(props){
 				<IconButton aria-label="open drawer" edge="start" onClick={handleDrawerToggle} sx={styles.icon}>
             	<MenuIcon />
           	</IconButton>
-          	<Typography variant='h4' sx={styles.appbarTitle}>Crypto</Typography>
+          	<Typography variant='h4' onClick={()=>navigate('/')} sx={styles.appbarTitle}>Crypto</Typography>
             {/*<Typography variant='p' color='primary'>Welcome {isAuthenticated ? user.first_name:'guest'}</Typography>*/}
             { isAuthenticated ? <Cart /> : ""}
           	<Box sx={styles.nav}>
               <Button key="Home" sx={styles.txtBlack} component={RouterLink} to="/">
-                Home
+	                <HomeIcon />Home
               </Button>
               {isAuthenticated ? authLinks : guestLinks}
           </Box>

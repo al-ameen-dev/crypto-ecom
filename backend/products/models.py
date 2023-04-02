@@ -34,6 +34,6 @@ class UserInfo(models.Model):
 	state = models.CharField(max_length=100,default=None)
 	
 	def __str__(self):
-		return self.first_name+' '+self.last_name+' profile'
+		return self.user.first_name+' '+self.user.last_name+' profile'
 
 	

@@ -104,8 +104,8 @@ export default function Cart() {
 
   return (
     <>
-        <IconButton onClick={handleClickOpen} color="primary" aria-label="add to shopping cart">
-        		<ShoppingCartOutlinedIcon /> cart
+        <IconButton sx={{textTransform:'none'}} onClick={handleClickOpen} color="primary" aria-label="add to shopping cart">
+        		<ShoppingCartOutlinedIcon /> Cart
         </IconButton>
       <BootstrapDialog
         onClose={handleClose}

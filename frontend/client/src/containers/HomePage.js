@@ -20,17 +20,20 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUserInfo } from 'features/user';
 
 
 const HomePage = () =>{
-	
 	const [search,setSearch] = useState('');
 	const [products,setProducts] = useState([])
 	const [minRange,setMinRange] = useState(200)
 	const [maxRange,setMaxRange] = useState(4000)
 	const [step,setStep] = useState(100)
 	const [category,setCategory] = useState('watch')
-	const [price,setPrice] = useState('')	
+	const [price,setPrice] = useState('')
+	const dispatch = useDispatch();
+	const { isAuthenticated, user, token} = useSelector(state => state.user);
 	
 	const productsurl = 'http://127.0.0.1:8000/api/products/all'
 	const categoryurl = 'http://127.0.0.1:8000/api/products/'
