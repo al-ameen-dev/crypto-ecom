@@ -118,8 +118,9 @@ function Payment() {
       
       }
       catch (error){
-        enqueueSnackbar("Payment failed!", {variant:"error",anchorOrigin:{vertical:'top',horizontal:'center'}});
         setError(error.message);
+        enqueueSnackbar("Payment failed!", {variant:"error",anchorOrigin:{vertical:'top',horizontal:'center'}});
+        console.log("Error is :"+error)
         //navigate("/payment")
       }
     }
@@ -183,7 +184,7 @@ function Payment() {
         
         {console.log(transaction)}
 
-        {error && <div>{JSON.stringify(error)}</div>}
+        {/*error && <div>{JSON.stringify(error)}</div>*/}
 
 	</Layout>
   )

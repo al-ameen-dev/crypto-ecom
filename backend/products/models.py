@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -19,8 +20,8 @@ class PurchasedProduct(models.Model):
 	name = models.CharField(max_length=100)
 	price = models.IntegerField()
 	imgurl = models.CharField(max_length=400)
-	purchased_at = models.DateTimeField(auto_now_add=True)	
-	
+	#purchased_at = models.DateTimeField(auto_now_add=True, format="%A, %d %B %Y %H:%M:%S")	
+	purchased_at =  models.CharField(max_length=50, default=timezone.now().strftime("%A, %d %B %Y %H:%M:%S"))
 	def __str__(self):
 		return self.name+' user '+self.user.first_name+' '+self.user.last_name
 		

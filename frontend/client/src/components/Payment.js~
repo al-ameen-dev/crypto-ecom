@@ -109,7 +109,7 @@ function Payment() {
         axios.get(purchaseUrl,{
 				headers:{
           		'Authorization': 'Bearer '+token,
-        		},).then((response)=>{
+        		}}).then((response)=>{
 					console.log(response.data)        			
         		});
         	
@@ -118,8 +118,9 @@ function Payment() {
       
       }
       catch (error){
-        enqueueSnackbar("Payment failed!", {variant:"error",anchorOrigin:{vertical:'top',horizontal:'center'}});
         setError(error.message);
+        enqueueSnackbar("Payment failed!", {variant:"error",anchorOrigin:{vertical:'top',horizontal:'center'}});
+        console.log("Error is :"+error)
         //navigate("/payment")
       }
     }

@@ -16,6 +16,7 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import axios from 'axios';
 
 
@@ -58,6 +59,8 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function Cart() {
+	
+	const { enqueueSnackbar } = useSnackbar()
   const [open, setOpen] = useState(false);
   const [items,setItems] = useState([]);
   const [total,setTotal] = useState(0)
@@ -105,8 +108,15 @@ export default function Cart() {
   };
   
   const handlePayment = ()=>{
-		localStorage.setItem("amount",total);
+  	if(total !== 0)
+  	{
+  		localStorage.setItem("amount",total);
 		navigate("/payment");
+  	}
+  	else {
+		enqueueSnackbar("Add some items to the cart",{variant:"info",anchorOrigin:{vertical:'top',horizontal:'center'}})  	
+  	}
+  	
   }
 
   return (
@@ -117,7 +127,7 @@ export default function Cart() {
       <BootstrapDialog
         onClose={handleClose}
         fullWidth='xl'
-        maxWidth={true}
+        
         aria-labelledby="customized-dialog-title"
         open={open}
       >

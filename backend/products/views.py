@@ -106,6 +106,7 @@ class PurchaseHistory(APIView):
 		pitems = PurchasedProduct.objects.filter(user=request.user.pk)
 		serializer = PurchasedProductSerializer(pitems,many=True)
 		return Response(serializer.data)
+		
 class Purchase(APIView):
 	permission_classes = [IsAuthenticated]
 	def get(self, request, format=None):

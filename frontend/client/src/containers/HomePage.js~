@@ -38,7 +38,6 @@ const HomePage = () =>{
 	const productsurl = 'http://127.0.0.1:8000/api/products/all'
 	const categoryurl = 'http://127.0.0.1:8000/api/products/'
 	useEffect(() =>{
-				localStorage.setItem("amount",50);
 				axios.get(categoryurl+category).then((response)=>{
 				setProducts(response.data)
 				console.log(products)

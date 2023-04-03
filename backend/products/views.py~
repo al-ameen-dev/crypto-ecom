@@ -103,15 +103,18 @@ class Userprofile(APIView):
 class PurchaseHistory(APIView):
 	permission_classes = [IsAuthenticated]
 	def get(self, request, format=None):
+		print("user id",request.user.pk)
 		pitems = PurchasedProduct.objects.filter(user=request.user.pk)
+		print(pitems)
 		serializer = PurchasedProductSerializer(pitems,many=True)
 		return Response(serializer.data)
+		
 class Purchase(APIView):
 	permission_classes = [IsAuthenticated]
 	def get(self, request, format=None):
 		cartdata = CartItem.objects.filter(user=request.user.pk)
 		for item in cartdata:
-			purchaseItem = PurchasedProduct.objects.create(user=request.user.pk,name=item.name,price=item.price,imgurl=item.imgurl)
+			purchaseItem = PurchasedProduct.objects.create(user=request.user,name=item.name,price=item.price,imgurl=item.imgurl)
 			purchaseItem.save()
 			item.delete()
 		
