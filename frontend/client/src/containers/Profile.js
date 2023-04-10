@@ -11,16 +11,17 @@ const Profile = () =>{
         <Layout title="Profile" content="Dashboard Page">
     			<CssBaseline />
    	 		<Container>
-    				<Grid container spacing={3} direction='row'>			
-						<Grid item xs={12} md={6} >
-							<Paper elevation={1}>					
+   	 			<Paper elevation={10} sx={{width:"100%"}}>
+    				<Grid container spacing={2} direction='row'>			
+						<Grid item sx={{width:"70%"}} xs={12} md={6} >					
 								<UserInfo />
-							</Paper>				
+										
 						</Grid>
 						<Grid item xs={12} md={6} >
 							<OrderHistory />
 						</Grid>
 					</Grid>
+					</Paper>	
     			</Container>
 		</Layout>
    )

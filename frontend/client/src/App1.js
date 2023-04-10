@@ -21,12 +21,6 @@ import Payment from "components/Payment";
 
 export default function App(){
 	
-	//const [checked,setChecked] = useState(false);
-	//useEffect(()=>{
-		//setChecked(true);
-	//	});
-		
-		//<ExpandMoreIcon sx={styles.goDown} />
 	const styles = {
 		title:{
 			color:'primary.dark',		

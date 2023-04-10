@@ -148,7 +148,7 @@ const Profile = () =>{
             		User Profile
         			</Typography>
         		</Box>
-				<Box component="form" noValidate onSubmit={updateflag ? handleUpdate : handleSubmit} sx={{ mt: 3 }}>
+				<Box component="form" noValidate onSubmit={updateflag ? handleUpdate : handleSubmit} sx={{ mt: 3,ml:5}}>
 					<Grid container spacing={1}>
 						<Grid item xs={12} sm={6}>
             			<TextField

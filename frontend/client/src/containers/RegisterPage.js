@@ -108,8 +108,8 @@ const handleBlurEmailChange = (event) =>{
 }
 return (
 <Layout title="Register" content="Register Page">
-	<Container>
-	 <Paper elevation={10}>
+	<Container sx={{display:'flex',direction:'row',justifyContent:"center",alignItems:'center'}}>
+	 <Paper elevation={10} sx={{width:"50%"}}>
     <Container component="main" maxWidth="xs">
     <CssBaseline />
     <Box

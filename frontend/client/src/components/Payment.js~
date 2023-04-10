@@ -184,7 +184,7 @@ function Payment() {
         
         {console.log(transaction)}
 
-        {error && <div>{JSON.stringify(error)}</div>}
+        {/*error && <div>{JSON.stringify(error)}</div>*/}
 
 	</Layout>
   )

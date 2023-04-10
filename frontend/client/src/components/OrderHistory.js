@@ -80,12 +80,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
             		Order History
         			</Typography>
         		</Box>
-				<Box component="form"  sx={{ mt: 3 }}>
+				<Box component="form"  sx={{ mt: 3 ,mr:5}}>
 					<TableContainer component={Paper}>
-      				<Table sx={{ minWidth: 300 }} aria-label="customized table">
+      				<Table sx={{ minWidth: 350 }} aria-label="customized table">
         					<TableHead>
           					<TableRow>
             					<StyledTableCell>Product Name</StyledTableCell>
+            					<StyledTableCell align="right">Product View</StyledTableCell>
             					<StyledTableCell align="right">Product Price</StyledTableCell>
             					<StyledTableCell align="right">Purchased At</StyledTableCell>
           					</TableRow>
@@ -94,6 +95,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
           					{purchaseHistory.map((row) => (
             					<StyledTableRow key={row.id}>
               						<StyledTableCell component="th" scope="row">{row.name}</StyledTableCell>
+              						<StyledTableCell align="right"><img height='65px' width='65px' src={row.imgurl} /></StyledTableCell>
               						<StyledTableCell align="right">{row.price}</StyledTableCell>	
 										<StyledTableCell align="right">{row.purchased_at}</StyledTableCell>
             					</StyledTableRow>

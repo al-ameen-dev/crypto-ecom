@@ -80,8 +80,8 @@ export default function LoginPage() {
 
   return (
     <Layout title="Login" content="Login Page">
-		<Container>    	
-    	<Paper elevation={10}>
+		<Container sx={{display:'flex',direction:'row',justifyContent:"center",alignItems:'center'}}>    	
+    	<Paper elevation={10} sx={{width:'50%'}}>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{

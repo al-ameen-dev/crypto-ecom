@@ -1,10 +1,10 @@
 import AppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import axios from 'axios';
@@ -110,6 +110,7 @@ export default function Header(props){
 	
 	const handleLogout = () =>{
     localStorage.removeItem("mydata")
+    localStorage.removeItem("amount")
 		dispatch(setLogout())	
 	}
 	const handleDrawerToggle = () => {
@@ -172,10 +173,10 @@ export default function Header(props){
   const guestLinks = (
     <>
       <Button key="Login" sx={styles.txtBlack} component={RouterLink} to="/signin">
-	     		 <LoginIcon />Signin
+	     		 <LoginIcon />Sign in
       </Button>
       <Button key="Register" sx={styles.txtBlack} component={RouterLink} to="/signup">
-        <HowToRegIcon />Signup
+        <HowToRegIcon />Sign up
       </Button>
     </>
   )
@@ -199,12 +200,12 @@ export default function Header(props){
     <>
       <ListItem key="Login" component={RouterLink} to="/signin" disablePadding>
         <ListItemButton sx={{ textAlign: 'center' }}>
-          <ListItemText primary="Signin" sx={styles.txtBlack} />
+          <ListItemText primary="Sign in" sx={styles.txtBlack} />
         </ListItemButton>
       </ListItem>
       <ListItem key="Register" component={RouterLink} to="/signup" disablePadding>
         <ListItemButton sx={{ textAlign: 'center' }}>
-          <ListItemText primary="Signup" sx={styles.txtBlack} />
+          <ListItemText primary="Sign up" sx={styles.txtBlack} />
         </ListItemButton>
       </ListItem>
     </>
@@ -248,7 +249,7 @@ export default function Header(props){
 				<IconButton aria-label="open drawer" edge="start" onClick={handleDrawerToggle} sx={styles.icon}>
             	<MenuIcon />
           	</IconButton>
-          	<Typography variant='h4' onClick={()=>navigate('/')} sx={styles.appbarTitle}>Crypto</Typography>
+          	<Typography variant='h4' onClick={()=>navigate('/')} sx={styles.appbarTitle}>BlockTopia</Typography>
             {/*<Typography variant='p' color='primary'>Welcome {isAuthenticated ? user.first_name:'guest'}</Typography>*/}
             { isAuthenticated ? <Cart /> : ""}
           	<Box sx={styles.nav}>
