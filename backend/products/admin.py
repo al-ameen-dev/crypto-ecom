@@ -6,3 +6,4 @@ admin.site.register(Product)
 admin.site.register(CartItem)
 admin.site.register(UserInfo)
 admin.site.register(PurchasedProduct)
+admin.site.site_header = "Blocktopia Admin"
